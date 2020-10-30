@@ -1,9 +1,5 @@
 # Integration Testing
 
-## 📝 Your Notes
-
-Elaborate on your learnings here in `INSTRUCTIONS.md`
-
 ## Background
 
 Let's take a step back and pretend that testing doesn't exist. Imagine you're
@@ -203,7 +199,6 @@ the data. So you're going to want these:
 ```javascript
 import * as usersDB from 'test/data/users'
 import * as booksDB from 'test/data/books'
-import * as listItemsDB from 'test/data/list-items'
 ```
 
 To create an authenticated user, do this:
@@ -230,7 +225,6 @@ As a part of this, you'll want to cleanup the databases, you can do this with
 ```javascript
 await usersDB.reset()
 await booksDB.reset()
-await listItemsDB.reset()
 ```
 
 **Files:**
@@ -248,9 +242,9 @@ to use:
 
 You'll do mostly the same stuff in the first part of the test (the "arrange"
 portion), and once the app is ready to go, then click on the "Add to list"
-button, wait for the app to settle again (loading indicators should be gone),
-then verify the right elements appear on the screen now that this book has a
-list item.
+button, wait for the app to settle again (queryCache should no longer be
+fetching and loading indicators should be gone), then verify the right elements
+appear on the screen now that this book has a list item.
 
 > 💰 It may be a good idea to pull the app up and see what changes when you're
 > on the book screen and add a book to your reading list. That's what you're
@@ -338,15 +332,6 @@ for the user who's logged in so you should be good to rock and roll.
 Editing the note works just fine, but you do have to wait 300ms for the debounce
 feature. See if you can figure out how to use `jest.useFakeTimers()` and
 `jest.useRealTimers()` to speed that up (it takes fewer changes than you think).
-
-💰 Long after recording the videos, I discovered a critical issue that lead to
-some flaky tests when using fake timers and react-query together. After much
-agonizing pain, I finally figured out the solution to the problem and I've
-updated the codebase to handle this. I suggest for this extra credit you take a
-look at the `src/setupTests.extra-5.js` file and just copy/paste the `afterEach`
-at the end of that rather than subject yourself to the same pain I went through.
-Hopefully the code comments there help give you an idea of what's going on
-there.
 
 **Files:**
 

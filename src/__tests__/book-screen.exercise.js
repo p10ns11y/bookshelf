@@ -19,7 +19,7 @@ test.todo('renders all the book information')
 //   📜 https://developer.mozilla.org/en-US/docs/Web/API/History/pushState
 
 // 🐨 reassign window.fetch to another function and handle the following requests:
-// - url ends with `/bootstrap`: respond with {user, listItems: []}
+// - url ends with `/me`: respond with {user}
 // - url ends with `/list-items`: respond with {listItems: []}
 // - url ends with `/books/${book.id}`: respond with {book}
 // 💰 window.fetch = async (url, config) => { /* handle stuff here*/ }
