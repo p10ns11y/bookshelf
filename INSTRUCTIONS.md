@@ -1,9 +1,5 @@
 # Render as you fetch
 
-## 📝 Your Notes
-
-Elaborate on your learnings here in `INSTRUCTIONS.md`
-
 ## Background
 
 Something that negatively impacts the performance of our application is what's
@@ -41,10 +37,10 @@ over the left as much as we can for the things the user needs. We're a little
 limited because this is a client-side application only. You can take this
 further with server side rendered applications. So if your app requires
 _screaming_ fast performance, then consider investigating a server-side
-rendering framework like [Next.js](https://nextjs.org/) or a static site
+rendering framework like [Next.js](https://nextjs.org/) or a server-side
 generation framework like [Gatsby](https://www.gatsbyjs.com/).
 
-Here's what happens when a logged-in user goes to our app:
+Here's what happens when an logged-in user goes to our app:
 
 1. Get the document (`index.html`)
 2. Get the linked JS (`<script src="...">`) and CSS
