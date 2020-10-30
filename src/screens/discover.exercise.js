@@ -95,7 +95,7 @@ function DiscoverBooksScreen({user}) {
         books.length ? (
           <BookListUL css={{marginTop: 20}}>
             {books.map(book => (
-              <li key={book.id} aria-label={book.title}>
+              <li key={book.id}>
                 <BookRow
                   // 💣 remove the user prop here
                   user={user}

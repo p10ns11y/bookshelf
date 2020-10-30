@@ -32,11 +32,7 @@ function ListItemList({
     <BookListUL>
       {filteredListItems.map(listItem => (
         <li key={listItem.id}>
-          <BookRow
-            // 💣 remove the user prop here
-            user={user}
-            book={listItem.book}
-          />
+          <BookRow user={user} book={listItem.book} />
         </li>
       ))}
     </BookListUL>

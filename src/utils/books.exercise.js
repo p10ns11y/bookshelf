@@ -1,6 +1,6 @@
 // 🐨 we're going to use React hooks in here now so we'll need React
 import {useQuery, queryCache} from 'react-query'
-// 🐨 get AuthContext from context/auth-context
+// 🐨 get AuthContext from ./context/auth-context
 import {client} from './api-client'
 import bookPlaceholderSvg from 'assets/book-placeholder.svg'
 
@@ -72,7 +72,11 @@ const bookQueryConfig = {
 }
 
 function setQueryDataForBook(book) {
-  queryCache.setQueryData(['book', {bookId: book.id}], book, bookQueryConfig)
+  queryCache.setQueryData({
+    queryKey: ['book', {bookId: book.id}],
+    queryFn: book,
+    ...bookQueryConfig,
+  })
 }
 
 export {useBook, useBookSearch, refetchBookSearchQuery, setQueryDataForBook}

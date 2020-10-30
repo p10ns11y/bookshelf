@@ -1,9 +1,5 @@
 # Context
 
-## 📝 Your Notes
-
-Elaborate on your learnings here in `INSTRUCTIONS.md`
-
 ## Background
 
 Once we've got all our server cache state inside `react-query`, there's not a
@@ -101,6 +97,8 @@ hook. And you don't need to export the `AuthContext` anymore!
 - `src/context/auth-context.js`
 - `src/app.js`
 - `src/index.js` (this is where you'll render the `AuthProvider`)
+- `src/authenticated-app.js`
+- `src/unauthenticated-app.js`
 
 ### 3. 💯 colocate global providers
 
