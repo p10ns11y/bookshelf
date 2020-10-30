@@ -1,9 +1,5 @@
 # Compound Components
 
-## 📝 Your Notes
-
-Elaborate on your learnings here in `INSTRUCTIONS.md`
-
 ## Background
 
 Whenever you find yourself copy/pasting stuff in your codebase, you may have the
