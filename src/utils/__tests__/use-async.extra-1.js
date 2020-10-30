@@ -93,7 +93,7 @@ test('calling run with a promise which rejects', async () => {
   await act(async () => {
     reject(rejectedValue)
     await p.catch(() => {
-      /* ignore error */
+      /* ignore erorr */
     })
   })
   expect(result.current).toEqual({...rejectedState, error: rejectedValue})

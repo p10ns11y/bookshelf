@@ -1,9 +1,5 @@
 # Testing Hooks and Components
 
-## 📝 Your Notes
-
-Elaborate on your learnings here in `INSTRUCTIONS.md`
-
 ## Background
 
 The two building blocks of React applications are Hooks and Components. You can
@@ -46,8 +42,7 @@ Here's a quick example of how to test a component with React Testing Library:
 
 ```javascript
 import * as React from 'react'
-import {render, screen} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import {render, screen, userEvent} from '@testing-library/react'
 import {MyComponent} from '../my-component'
 
 test('renders click me button', () => {
