@@ -94,16 +94,13 @@ function BookRow({user, book}) {
               <small>{book.publisher}</small>
             </div>
           </div>
-          <small css={{whiteSpace: 'break-spaces', display: 'block'}}>
-            {book.synopsis.substring(0, 500)}...
-          </small>
+          <small>{book.synopsis.substring(0, 500)}...</small>
         </div>
       </Link>
       <div
         css={{
           marginLeft: '20px',
           position: 'absolute',
-          right: -20,
           color: colors.gray80,
           display: 'flex',
           flexDirection: 'column',
