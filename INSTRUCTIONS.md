@@ -1,9 +1,5 @@
 # Make HTTP Requests
 
-## 📝 Your Notes
-
-Elaborate on your learnings here in `INSTRUCTIONS.md`
-
 ## Background
 
 Our app wouldn't be very interesting without the ability to request data from a
@@ -68,11 +64,6 @@ resources.
 Integrating this kind of thing with React involves utilizing React's `useEffect`
 hook for making the request and `useState` for managing the status of the
 request as well as the response data and error information.
-
-You might consider making the network request in the event handler. In general I
-recommend to do all your side effects inside the `useEffect`. This is because in
-the event handler you don't have any possibility to prevent race conditions, or
-to implement any cancellation mechanism.
 
 📜 https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 

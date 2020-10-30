@@ -64,7 +64,7 @@ function DiscoverBooksScreen() {
         data?.books?.length ? (
           <BookListUL css={{marginTop: 20}}>
             {data.books.map(book => (
-              <li key={book.id} aria-label={book.title}>
+              <li key={book.id}>
                 <BookRow key={book.id} book={book} />
               </li>
             ))}
