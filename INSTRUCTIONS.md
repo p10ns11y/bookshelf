@@ -1,9 +1,5 @@
 # Routing
 
-## 📝 Your Notes
-
-Elaborate on your learnings here in `INSTRUCTIONS.md`
-
 ## Background
 
 The URL is arguably one of the best features of the web. The ability for one
@@ -173,9 +169,9 @@ module.exports = proxy
 
 **With serve**
 
-The `serve` module can be configured with a `serve.json` file in the directory
-you serve. Open `./public/serve.json` and see if you can figure out how to get
-that to redirect properly.
+The `serve` module can be configured with a `serve.json` file in the you serve.
+Open `./public/serve.json` and see if you can figure out how to get that to
+redirect properly.
 
 To know whether it worked, you'll need to run:
 
