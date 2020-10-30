@@ -1,9 +1,5 @@
 # Performance
 
-## 📝 Your Notes
-
-Elaborate on your learnings here in `INSTRUCTIONS.md`
-
 ## Background
 
 One of the most common performance problems web applications face is initial

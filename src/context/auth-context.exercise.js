@@ -36,8 +36,7 @@ function AuthProvider(props) {
   } = useAsync()
 
   React.useEffect(() => {
-    const userPromise = getUser()
-    run(userPromise)
+    run(getUser())
   }, [run])
 
   const login = form => auth.login(form).then(user => setData(user))
