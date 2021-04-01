@@ -1,14 +1,26 @@
 /** @jsx jsx */
-import {jsx} from '@emotion/core'
+import {jsx, keyframes} from '@emotion/core'
 
 import 'bootstrap/dist/css/bootstrap-reboot.css'
 import '@reach/dialog/styles.css'
 import * as React from 'react'
 import ReactDOM from 'react-dom'
+import {FaSpinner} from 'react-icons/fa'
+import styled from '@emotion/styled/macro'
+
 import {Button, Input, FormGroup} from './components/lib'
 import {Modal, ModalContents, ModalOpenButton} from './components/modal'
 import {Logo} from './components/logo'
 
+const spin = keyframes`
+  to {
+    transform: rotate(360deg);
+  }
+`
+
+const Spinner = styled(FaSpinner)({
+  animation: `${spin} 1s linear infinite`,
+})
 function LoginForm({onSubmit, submitButton}) {
   function handleSubmit(event) {
     event.preventDefault()
@@ -42,7 +54,10 @@ function LoginForm({onSubmit, submitButton}) {
         <label htmlFor="password">Password</label>
         <Input id="password" type="password" />
       </FormGroup>
-      <div>{React.cloneElement(submitButton, {type: 'submit'})}</div>
+      <div>
+        {React.cloneElement(submitButton, {type: 'submit'})}
+        <Spinner />
+      </div>
     </form>
   )
 }
