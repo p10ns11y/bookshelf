@@ -10,8 +10,9 @@ function client(endpoint, customConfig = {}) {
       const data = await response.json()
       if (response.ok) {
         return data
+      } else {
+        return Promise.reject(data)
       }
-      return Promise.reject(data)
     })
 }
 
