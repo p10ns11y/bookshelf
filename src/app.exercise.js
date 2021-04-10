@@ -25,26 +25,27 @@ async function getUser() {
 function App() {
   const {
     data: user,
-    run,
     error,
-    isIdle,
     isLoading,
+    isIdle,
     isError,
-    setData: setUser,
+    isSuccess,
+    run,
+    setData,
   } = useAsync()
 
   React.useEffect(() => {
     run(getUser())
   }, [run])
 
-  const login = form => auth.login(form).then(u => setUser(u))
-  const register = form => auth.register(form).then(u => setUser(u))
+  const login = form => auth.login(form).then(user => setData(user))
+  const register = form => auth.register(form).then(user => setData(user))
   const logout = () => {
     auth.logout()
-    setUser(null)
+    setData(null)
   }
 
-  if (isIdle || isLoading) {
+  if (isLoading || isIdle) {
     return <FullPageSpinner />
   }
 
@@ -66,11 +67,13 @@ function App() {
     )
   }
 
-  return user ? (
-    <AuthenticatedApp user={user} logout={logout} />
-  ) : (
-    <UnauthenticatedApp login={login} register={register} />
-  )
+  if (isSuccess) {
+    return user ? (
+      <AuthenticatedApp user={user} logout={logout} />
+    ) : (
+      <UnauthenticatedApp login={login} register={register} />
+    )
+  }
 }
 
 export {App}
