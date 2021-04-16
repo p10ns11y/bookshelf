@@ -20,8 +20,8 @@ function BookRow({book}) {
       }}
     >
       <Link
-        to={`/book/${book.id}`}
         aria-labelledby={id}
+        to={`/book/${book.id}`}
         css={{
           minHeight: 270,
           flexGrow: 2,
