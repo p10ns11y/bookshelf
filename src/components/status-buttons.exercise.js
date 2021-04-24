@@ -11,13 +11,13 @@ import {
 import {FaTimesCircle} from 'react-icons/fa'
 import Tooltip from '@reach/tooltip'
 import {
-  useListItems,
+  useListItem,
   useUpdateListItem,
   useRemoveListItem,
   useCreateListItem,
 } from 'utils/list-items'
-import {useAsync} from 'utils/hooks'
 import * as colors from 'styles/colors'
+import {useAsync} from 'utils/hooks'
 import {CircleButton, Spinner} from './lib'
 
 function TooltipButton({label, highlight, onClick, icon, ...rest}) {
@@ -52,13 +52,10 @@ function TooltipButton({label, highlight, onClick, icon, ...rest}) {
 }
 
 function StatusButtons({user, book}) {
-  const {data: listItems} = useListItems(user)
-  const listItem = listItems?.find(li => li.bookId === book.id) ?? null
+  const listItem = useListItem(user, book.id)
 
   const [update] = useUpdateListItem(user)
-
   const [remove] = useRemoveListItem(user)
-
   const [create] = useCreateListItem(user)
 
   return (

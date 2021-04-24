@@ -8,33 +8,14 @@ import {useBookSearch} from 'utils/books'
 import * as colors from 'styles/colors'
 import {BookRow} from 'components/book-row'
 import {BookListUL, Spinner, Input} from 'components/lib'
-import bookPlaceholderSvg from 'assets/book-placeholder.svg'
-
-const loadingBook = {
-  title: 'Loading...',
-  author: 'loading...',
-  coverImageUrl: bookPlaceholderSvg,
-  publisher: 'Loading Publishing',
-  synopsis: 'Loading...',
-  loadingBook: true,
-}
-
-const loadingBooks = Array.from({length: 10}, (v, index) => ({
-  id: `loading-book-${index}`,
-  ...loadingBook,
-}))
 
 function DiscoverBooksScreen({user}) {
   const [query, setQuery] = React.useState('')
   const [queried, setQueried] = React.useState(false)
-
-  const {
-    data: books = loadingBooks,
-    error,
-    isLoading,
-    isError,
-    isSuccess,
-  } = useBookSearch(query, user)
+  const {books, error, isLoading, isError, isSuccess} = useBookSearch(
+    query,
+    user,
+  )
 
   function handleSearchSubmit(event) {
     event.preventDefault()

@@ -11,10 +11,11 @@ function ListItemList({
   noListItems,
   noFilteredListItems,
 }) {
-  const {data: listItems} = useListItems(user)
-  const filteredListItems = listItems?.filter(filterListItems)
+  const listItems = useListItems(user)
 
-  if (!listItems?.length) {
+  const filteredListItems = listItems.filter(filterListItems)
+
+  if (!listItems.length) {
     return <div css={{marginTop: '1em', fontSize: '1.2em'}}>{noListItems}</div>
   }
   if (!filteredListItems.length) {
