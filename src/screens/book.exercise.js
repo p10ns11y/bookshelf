@@ -6,8 +6,8 @@ import debounceFn from 'debounce-fn'
 import {FaRegCalendarAlt} from 'react-icons/fa'
 import Tooltip from '@reach/tooltip'
 import {useParams} from 'react-router-dom'
-import {useQuery, useMutation, queryCache} from 'react-query'
-import {client} from 'utils/api-client'
+import {useBook} from 'utils/books'
+import {useListItems, useUpdateListItem} from 'utils/list-items'
 import {formatDate} from 'utils/misc'
 import * as mq from 'styles/media-queries'
 import * as colors from 'styles/colors'
@@ -27,19 +27,11 @@ const loadingBook = {
 
 function BookScreen({user}) {
   const {bookId} = useParams()
-  const {data} = useQuery({
-    queryKey: ['book', {bookId}],
-    queryFn: (key, {bookId}) => client(`books/${bookId}`, {token: user.token}),
-  })
+  const {data: book = loadingBook} = useBook(bookId, user)
 
-  const {data: listItems} = useQuery({
-    queryKey: ['list-items'],
-    queryFn: () =>
-      client('list-items', {token: user.token}).then(data => data.listItems),
-  })
+  const {data: listItems} = useListItems(user)
   const listItem = listItems?.find(li => li.bookId === bookId) ?? null
 
-  const book = data?.book ?? loadingBook
   const {title, author, coverImageUrl, publisher, synopsis} = book
 
   return (
@@ -122,15 +114,7 @@ function ListItemTimeframe({listItem}) {
 }
 
 function NotesTextarea({listItem, user}) {
-  const [mutate] = useMutation(
-    updates =>
-      client(`list-items/${updates.id}`, {
-        data: updates,
-        method: 'PUT',
-        token: user.token,
-      }),
-    {onSettled: () => queryCache.invalidateQueries('list-items')},
-  )
+  const [mutate] = useUpdateListItem(user)
   const debouncedMutate = React.useMemo(() => debounceFn(mutate, {wait: 300}), [
     mutate,
   ])

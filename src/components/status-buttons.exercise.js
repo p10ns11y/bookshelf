@@ -10,8 +10,12 @@ import {
 } from 'react-icons/fa'
 import {FaTimesCircle} from 'react-icons/fa'
 import Tooltip from '@reach/tooltip'
-import {useQuery, useMutation, queryCache} from 'react-query'
-import {client} from 'utils/api-client'
+import {
+  useListItems,
+  useUpdateListItem,
+  useRemoveListItem,
+  useCreateListItem,
+} from 'utils/list-items'
 import {useAsync} from 'utils/hooks'
 import * as colors from 'styles/colors'
 import {CircleButton, Spinner} from './lib'
@@ -48,37 +52,14 @@ function TooltipButton({label, highlight, onClick, icon, ...rest}) {
 }
 
 function StatusButtons({user, book}) {
-  const {data: listItems} = useQuery({
-    queryKey: ['list-items'],
-    queryFn: () =>
-      client('list-items', {token: user.token}).then(data => data.listItems),
-  })
+  const {data: listItems} = useListItems(user)
   const listItem = listItems?.find(li => li.bookId === book.id) ?? null
 
-  const [update] = useMutation(
-    updates =>
-      client(`list-items/${updates.id}`, {
-        data: updates,
-        method: 'PUT',
-        token: user.token,
-      }),
-    {onSettled: () => queryCache.invalidateQueries('list-items')},
-  )
+  const [update] = useUpdateListItem(user)
 
-  const [remove] = useMutation(
-    ({id}) => client(`list-items/${id}`, {method: 'DELETE', token: user.token}),
-    {onSettled: () => queryCache.invalidateQueries('list-items')},
-  )
+  const [remove] = useRemoveListItem(user)
 
-  const [create] = useMutation(
-    body =>
-      client(`list-items`, {
-        data: body,
-        method: 'POST',
-        token: user.token,
-      }),
-    {onSettled: () => queryCache.invalidateQueries('list-items')},
-  )
+  const [create] = useCreateListItem(user)
 
   return (
     <React.Fragment>
@@ -93,6 +74,7 @@ function StatusButtons({user, book}) {
         ) : (
           <TooltipButton
             label="Mark as read"
+            highlight={colors.green}
             onClick={() => update({id: listItem.id, finishDate: Date.now()})}
             icon={<FaCheckCircle />}
           />
