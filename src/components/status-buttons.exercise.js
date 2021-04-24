@@ -25,9 +25,10 @@ function TooltipButton({label, highlight, onClick, icon, ...rest}) {
 
   function handleClick() {
     if (isError) {
-      return reset()
+      reset()
+    } else {
+      run(onClick())
     }
-    run(onClick())
   }
 
   return (
