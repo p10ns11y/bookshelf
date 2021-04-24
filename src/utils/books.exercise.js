@@ -24,7 +24,9 @@ const getBookSearchConfig = (query, user) => ({
     }).then(data => data.books),
   config: {
     onSuccess(books) {
-      books.forEach(book => setQueryDataForBook(book))
+      for (const book of books) {
+        setQueryDataForBook(book)
+      }
     },
   },
 })
