@@ -16,6 +16,7 @@ import {
   useRemoveListItem,
   useCreateListItem,
 } from 'utils/list-items'
+import {refetchBookSearchQuery} from 'utils/books'
 import * as colors from 'styles/colors'
 import {useAsync} from 'utils/hooks'
 import {CircleButton, Spinner} from './lib'
@@ -58,9 +59,17 @@ function TooltipButton({label, highlight, onClick, icon, ...rest}) {
 function StatusButtons({user, book}) {
   const listItem = useListItem(user, book.id)
 
-  const [update] = useUpdateListItem(user, {throwOnError: true})
-  const [remove] = useRemoveListItem(user, {throwOnError: true})
-  const [create] = useCreateListItem(user, {throwOnError: true})
+  const [update] = useUpdateListItem(user, {
+    throwOnError: true,
+  })
+  const [remove] = useRemoveListItem(user, {
+    throwOnError: true,
+    onSuccess: () => refetchBookSearchQuery(user),
+  })
+  const [create] = useCreateListItem(user, {
+    throwOnError: true,
+    onSuccess: () => refetchBookSearchQuery(user),
+  })
 
   return (
     <React.Fragment>
