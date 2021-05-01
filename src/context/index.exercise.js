@@ -1,8 +1,6 @@
-// this module doesn't do anything for the exercise. But you'll use this for
-// the extra credit!
 import * as React from 'react'
-import {ReactQueryConfigProvider} from 'react-query'
 import {BrowserRouter as Router} from 'react-router-dom'
+import {ReactQueryConfigProvider} from 'react-query'
 import {AuthProvider} from './auth-context'
 
 const queryConfig = {
@@ -16,7 +14,6 @@ const queryConfig = {
     },
   },
 }
-
 function AppProviders({children}) {
   return (
     <ReactQueryConfigProvider config={queryConfig}>
