@@ -7,7 +7,7 @@ import {BrowserRouter as Router} from 'react-router-dom'
 import {FullPageSpinner, FullPageErrorFallback} from './components/lib'
 import {client} from './utils/api-client'
 import {useAsync} from './utils/hooks'
-// 🐨 import the AuthContext you created in ./context/auth-context
+import {AuthContext} from './context/auth-context'
 import {AuthenticatedApp} from './authenticated-app'
 import {UnauthenticatedApp} from './unauthenticated-app'
 
@@ -39,12 +39,28 @@ function App() {
     run(getUser())
   }, [run])
 
-  const login = form => auth.login(form).then(user => setData(user))
-  const register = form => auth.register(form).then(user => setData(user))
-  const logout = () => {
+  const login = React.useCallback(
+    form => auth.login(form).then(user => setData(user)),
+    [setData],
+  )
+  const register = React.useCallback(
+    form => auth.register(form).then(user => setData(user)),
+    [setData],
+  )
+  const logout = React.useCallback(() => {
     auth.logout()
     setData(null)
-  }
+  }, [setData])
+
+  const props = React.useMemo(
+    () => ({
+      user,
+      login,
+      register,
+      logout,
+    }),
+    [user, login, logout, register],
+  )
 
   if (isLoading || isIdle) {
     return <FullPageSpinner />
@@ -55,16 +71,16 @@ function App() {
   }
 
   if (isSuccess) {
-    const props = {user, login, register, logout}
-    // 🐨 wrap all of this in the AuthContext.Provider and set the `value` to props
-    return user ? (
-      <Router>
-        {/* 💣 remove the props spread here */}
-        <AuthenticatedApp {...props} />
-      </Router>
-    ) : (
-      // 💣 remove the props spread here
-      <UnauthenticatedApp {...props} />
+    return (
+      <AuthContext.Provider value={props}>
+        {user ? (
+          <Router>
+            <AuthenticatedApp />
+          </Router>
+        ) : (
+          <UnauthenticatedApp />
+        )}
+      </AuthContext.Provider>
     )
   }
 }
