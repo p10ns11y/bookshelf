@@ -1,4 +1,5 @@
 import * as React from 'react'
+import {wrap} from 'components/profiler'
 
 function useSafeDispatch(dispatch) {
   const mounted = React.useRef(false)
@@ -51,14 +52,14 @@ function useAsync(initialState) {
       }
       safeSetState({status: 'pending'})
       return promise.then(
-        data => {
+        wrap(data => {
           setData(data)
           return data
-        },
-        error => {
+        }),
+        wrap(error => {
           setError(error)
           return error
-        },
+        }),
       )
     },
     [safeSetState, setData, setError],

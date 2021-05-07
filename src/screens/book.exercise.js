@@ -13,8 +13,8 @@ import * as mq from 'styles/media-queries'
 import * as colors from 'styles/colors'
 import {Spinner, Textarea, ErrorMessage} from 'components/lib'
 import {Rating} from 'components/rating'
-import {StatusButtons} from 'components/status-buttons'
 import {Profiler} from 'components/profiler'
+import {StatusButtons} from 'components/status-buttons'
 
 function BookScreen() {
   const {bookId} = useParams()
@@ -24,7 +24,7 @@ function BookScreen() {
   const {title, author, coverImageUrl, publisher, synopsis} = book
 
   return (
-    <Profiler id="bookScreen" meta="individual book page">
+    <Profiler id="Book Screen" metadata={{bookId, listItemId: listItem?.id}}>
       <div>
         <div
           css={{
