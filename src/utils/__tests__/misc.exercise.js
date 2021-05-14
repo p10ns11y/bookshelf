@@ -1,9 +1,5 @@
 import {formatDate} from '../misc'
 
 test('formatDate formats the date to look nice', () => {
-  // arrange
-  const date = new Date('2021-05-09')
-
-  // assert
-  expect(formatDate(date)).toBe('May 21')
+  expect(formatDate(new Date('October 18, 1988'))).toBe('Oct 88')
 })
