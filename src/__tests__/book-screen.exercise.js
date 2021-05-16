@@ -7,11 +7,14 @@ import {
   loginAsUser,
 } from 'test/app-test-utils'
 import faker from 'faker'
+import {server, rest} from 'test/server'
 import {buildBook, buildListItem} from 'test/generate'
 import * as booksDB from 'test/data/books'
 import * as listItemsDB from 'test/data/list-items'
 import {formatDate} from 'utils/misc'
 import {App} from 'app'
+
+const apiURL = process.env.REACT_APP_API_URL
 
 async function renderBookScreen({user, book, listItem} = {}) {
   if (user === undefined) {
@@ -25,10 +28,10 @@ async function renderBookScreen({user, book, listItem} = {}) {
   }
   const route = `/book/${book.id}`
 
-  const result = await render(<App />, {user, route})
+  const utils = await render(<App />, {user, route})
 
   return {
-    ...result,
+    ...utils,
     book,
     user,
     listItem,
@@ -112,16 +115,10 @@ test('can remove a list item for the book', async () => {
 })
 
 test('can mark a list item as read', async () => {
-  const user = await loginAsUser()
-  const book = await booksDB.create(buildBook())
-  const listItem = await listItemsDB.create(
-    buildListItem({
-      owner: user,
-      book,
-      finishDate: null,
-    }),
-  )
-  await renderBookScreen({user, book, listItem})
+  const {listItem} = await renderBookScreen()
+
+  // set the listItem to be unread in the DB
+  await listItemsDB.update(listItem.id, {finishDate: null})
 
   const markAsReadButton = screen.getByRole('button', {name: /mark as read/i})
   userEvent.click(markAsReadButton)
@@ -165,4 +162,45 @@ test('can edit a note', async () => {
   expect(await listItemsDB.read(listItem.id)).toMatchObject({
     notes: newNotes,
   })
+})
+
+test('shows an error message when the book fails to load', async () => {
+  jest.spyOn(console, 'error').mockImplementation(() => {})
+  const book = {id: 'nobookid'}
+  await renderBookScreen({listItem: null, book})
+
+  expect((await screen.findByRole('alert')).textContent).toMatchInlineSnapshot(
+    `"There was an error: Book not found"`,
+  )
+  expect(console.error).toHaveBeenCalled()
+  console.error.mockRestore()
+})
+
+test('note update failures are displayed', async () => {
+  jest.spyOn(console, 'error').mockImplementation(() => {})
+  jest.useFakeTimers()
+  await renderBookScreen()
+
+  const newNotes = faker.lorem.words()
+  const notesTextarea = screen.getByRole('textbox', {name: /notes/i})
+
+  const testErrorMessage = 'test error'
+  server.use(
+    rest.put(`${apiURL}/list-items/:listItemId`, async (req, res, ctx) => {
+      return res(
+        ctx.status(400),
+        ctx.json({status: 400, message: testErrorMessage}),
+      )
+    }),
+  )
+
+  userEvent.type(notesTextarea, newNotes)
+  await screen.findByLabelText(/loading/i)
+  await waitForLoadingToFinish()
+
+  expect(screen.getByRole('alert').textContent).toMatchInlineSnapshot(
+    `"There was an error: test error"`,
+  )
+
+  console.error.mockRestore()
 })

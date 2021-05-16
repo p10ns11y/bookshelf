@@ -36,7 +36,7 @@ const waitForLoadingToFinish = () =>
   waitForElementToBeRemoved(() => [
     ...screen.queryAllByLabelText(/loading/i),
     ...screen.queryAllByText(/loading/i),
-  ])
+  ]) //.catch(err => console.log(err))
 
 export * from '@testing-library/react'
 export {render, userEvent, loginAsUser, waitForLoadingToFinish}
